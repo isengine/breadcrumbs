@@ -13,32 +13,32 @@ use is\Masters\View;
 $view = View::getInstance();
 $router = Router::getInstance();
 
-$instance = $object -> get('instance');
-$sets = &$object -> settings;
+$instance = $this -> get('instance');
+$sets = &$this -> settings;
 
 $position = null;
 $count = null;
 
 // template
 
-$container = System::set($object -> eget('container'));
+$container = System::set($this -> eget('container'));
 
 if ($container) {
-	$object -> eget('container') -> addCustom('itemscope', '');
-	$object -> eget('container') -> addCustom('itemtype', 'http://schema.org/BreadcrumbList');
+	$this -> eget('container') -> addCustom('itemscope', '');
+	$this -> eget('container') -> addCustom('itemtype', 'http://schema.org/BreadcrumbList');
 }
 
-$object -> eget('item') -> addCustom('itemprop', 'itemListElement');
-$object -> eget('item') -> addCustom('itemscope', '');
-$object -> eget('item') -> addCustom('itemtype', 'http://schema.org/ListItem');
+$this -> eget('item') -> addCustom('itemprop', 'itemListElement');
+$this -> eget('item') -> addCustom('itemscope', '');
+$this -> eget('item') -> addCustom('itemtype', 'http://schema.org/ListItem');
 
-$object -> eget('link') -> addCustom('itemprop', 'item');
+$this -> eget('link') -> addCustom('itemprop', 'item');
 
 // open
 
 if ($container) {
 	echo '<nav' . ($sets['separator-symbol'] ? ' style="--bs-breadcrumb-divider: \'' . Strings::except($sets['separator-symbol'], '"\'') . '\';"' : null) . ' aria-label="breadcrumb">';
-	$object -> eget('container') -> open(true);
+	$this -> eget('container') -> open(true);
 }
 
 // home
@@ -49,27 +49,27 @@ if ($sets['index']) {
 	$c = null;
 	
 	if ($sets['classes']['index']) {
-		$c = $object -> eget('item') -> classes;
-		$object -> eget('item') -> addClass($sets['classes']['index']);
+		$c = $this -> eget('item') -> classes;
+		$this -> eget('item') -> addClass($sets['classes']['index']);
 	}
 	
-	$object -> eget('item') -> open(true);
+	$this -> eget('item') -> open(true);
 	if (!$sets['index-active']) {
-		$object -> eget('link') -> addTag('span');
+		$this -> eget('link') -> addTag('span');
 	} else {
-		$object -> eget('link') -> addLink('/');
+		$this -> eget('link') -> addLink('/');
 	}
 	$content = '<span>' . $view -> get('lang|menu:index') . '</span><meta itemprop="position" content="' . $count . '">';
-	$object -> eget('link') -> addContent($content);
+	$this -> eget('link') -> addContent($content);
 	
-	$object -> eget('link') -> open(true);
-	$object -> eget('link') -> content(true);
-	$object -> eget('link') -> close(true);
+	$this -> eget('link') -> open(true);
+	$this -> eget('link') -> content(true);
+	$this -> eget('link') -> close(true);
 	
-	$object -> eget('item') -> close(true);
+	$this -> eget('item') -> close(true);
 	
 	if ($c) {
-		$object -> eget('item') -> setClass($c);
+		$this -> eget('item') -> setClass($c);
 	}
 	
 	unset($c);
@@ -78,13 +78,13 @@ if ($sets['index']) {
 
 // other
 
-if (System::typeIterable($object -> route)) {
-	$last = Objects::last($object -> route, 'value');
-	$object -> route = Objects::unlast($object -> route);
+if (System::typeIterable($this -> route)) {
+	$last = Objects::last($this -> route, 'value');
+	$this -> route = Objects::unlast($this -> route);
 }
 
-if (System::typeIterable($object -> route)) {
-	foreach ($object -> route as $item) {
+if (System::typeIterable($this -> route)) {
+	foreach ($this -> route as $item) {
 		
 		$count++;
 		$position .= ($position ? ':' : null) . $item;
@@ -92,17 +92,17 @@ if (System::typeIterable($object -> route)) {
 		$lang = $view -> get('lang|menu')[$position ? $position : 'index'];
 		$content = '<span>' . ($lang ? $lang : $item) . '</span><meta itemprop="position" content="' . $count . '">';
 		
-		$object -> eget('item') -> open(true);
+		$this -> eget('item') -> open(true);
 		
-		$object -> eget('link') -> addTag('a');
-		$object -> eget('link') -> addLink($link ? $link : '#');
-		$object -> eget('link') -> addContent($content);
+		$this -> eget('link') -> addTag('a');
+		$this -> eget('link') -> addLink($link ? $link : '#');
+		$this -> eget('link') -> addContent($content);
 		
-		$object -> eget('link') -> open(true);
-		$object -> eget('link') -> content(true);
-		$object -> eget('link') -> close(true);
+		$this -> eget('link') -> open(true);
+		$this -> eget('link') -> content(true);
+		$this -> eget('link') -> close(true);
 		
-		$object -> eget('item') -> close(true);
+		$this -> eget('item') -> close(true);
 		
 	}
 	unset($key, $item);
@@ -119,33 +119,33 @@ if ($last && $sets['last-item']) {
 	$content = '<span>' . ($lang ? $lang : $last) . '</span><meta itemprop="position" content="' . $count . '">';
 	
 	if ($sets['classes']['last-item']) {
-		$object -> eget('item') -> addClass($sets['classes']['last-item']);
+		$this -> eget('item') -> addClass($sets['classes']['last-item']);
 	}
 	
-	$object -> eget('item') -> addAria('current', 'page');
+	$this -> eget('item') -> addAria('current', 'page');
 	
-	$object -> eget('item') -> open(true);
+	$this -> eget('item') -> open(true);
 	
 	if (!$sets['last-item-active']) {
-		$object -> eget('link') -> addTag('span');
+		$this -> eget('link') -> addTag('span');
 	} else {
-		$object -> eget('link') -> addLink($link ? $link : '#');
+		$this -> eget('link') -> addLink($link ? $link : '#');
 	}
 	
-	$object -> eget('link') -> addContent($content);
+	$this -> eget('link') -> addContent($content);
 	
-	$object -> eget('link') -> open(true);
-	$object -> eget('link') -> content(true);
-	$object -> eget('link') -> close(true);
+	$this -> eget('link') -> open(true);
+	$this -> eget('link') -> content(true);
+	$this -> eget('link') -> close(true);
 	
-	$object -> eget('item') -> close(true);
+	$this -> eget('item') -> close(true);
 	
 }
 
 // close
 
 if ($container) {
-	$object -> eget('container') -> close(true);
+	$this -> eget('container') -> close(true);
 	echo '</nav>';
 }
 
