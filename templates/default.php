@@ -63,7 +63,7 @@ if ($sets['index']) {
 	} else {
 		$this -> eget('link') -> addLink('/');
 	}
-	$content = '<span>' . $view -> get('lang|menu:index') . '</span><meta itemprop="position" content="' . $count . '">';
+	$content = '<span>' . $view -> get('lang|nav:index') . '</span><meta itemprop="position" content="' . $count . '">';
 	$this -> eget('link') -> addContent($content);
 	
 	$this -> eget('link') -> open(true);
@@ -96,7 +96,7 @@ if (System::typeIterable($this -> route)) {
 		$count++;
 		$position .= ($position ? ':' : null) . $item;
 		$link = $router -> structure -> getDataByName($position)['link'];
-		$lang = $view -> get('lang|menu')[$position ? $position : 'index'];
+		$lang = $view -> get('lang|nav')[$position ? $position : 'index'];
 		$content = '<span>' . ($lang ? $lang : $item) . '</span><meta itemprop="position" content="' . $count . '">';
 		
 		$this -> eget('item') -> open(true);
@@ -125,7 +125,7 @@ if ($last && $sets['last-item']) {
 	$count++;
 	$position .= ($position ? ':' : null) . $last;
 	$link = $router -> structure -> getDataByName($position)['link'];
-	$lang = $view -> get('lang|menu')[$position ? $position : 'index'];
+	$lang = $view -> get('lang|nav')[$position ? $position : 'index'];
 	$content = '<span>' . ($lang ? $lang : $last) . '</span><meta itemprop="position" content="' . $count . '">';
 	
 	if ($sets['classes']['last-item']) {
