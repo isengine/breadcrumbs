@@ -132,6 +132,10 @@ if ($last && $sets['last-item']) {
 		$this -> eget('link') -> addLink($link ? $link : '#');
 	}
 	
+	if ($sets['classes']['last-link']) {
+		$this -> eget('link') -> addClass($sets['classes']['last-link']);
+	}
+	
 	$this -> eget('link') -> addContent($content);
 	
 	$this -> eget('link') -> open(true);
