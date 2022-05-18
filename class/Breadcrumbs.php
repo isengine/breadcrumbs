@@ -32,7 +32,7 @@ class Breadcrumbs extends Master
         //        $this->route = Objects::add($this->route, $content['parents']);
         //    }
         //}
-        if ($content['name']) {
+        if (isset($content['name'])) {
             $this->route = Objects::add($this->route, [ $content['name'] ]);
         }
 
